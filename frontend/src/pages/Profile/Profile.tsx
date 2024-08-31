@@ -88,7 +88,7 @@ const Profile: React.FC = () => {
 
     return (
         <div className='relative'>
-            <div className='absolute top-0 left-0 w-full z-10 border-2 border-black'>
+            <div className='absolute top-0 left-0 w-full z-10'>
                 <AppNavbar />
             </div>
 
