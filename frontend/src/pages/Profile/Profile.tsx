@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie'; 
 import PlusIcon from './assets/Plus.svg';
 import CloseIcon from './assets/Close.svg';
-import AppNavbar from '../App Navbar/AppNavbar';  // Import the AppNavbar component
+import AppNavbar from '../App Navbar/AppNavbar'; 
 
 const Profile: React.FC = () => {
     const [academicInterests, setAcademicInterests] = useState<string[]>([]);

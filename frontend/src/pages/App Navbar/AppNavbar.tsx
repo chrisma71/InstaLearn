@@ -11,8 +11,6 @@ const AppNavbar: React.FC = () => {
     return (
         <div className="bg-white border-b border-3 border-[#DCDCDC]">
             <div className="container mx-auto px-4 py-4 flex justify-center items-center space-x-8">
-                
-                {/* Search Bar */}
                 <div className="flex items-center w-60 relative">
                     <input 
                         type="text" 
@@ -27,20 +25,27 @@ const AppNavbar: React.FC = () => {
                     />
                     <img src={SearchIcon} alt="Search" className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4" />
                 </div>
-                
-                {/* Centered Icons with Text */}
                 <div className="flex space-x-6">
-                    <Link to="/" className="flex flex-col items-center">
+                    <Link to="/" className="flex flex-col items-center group">
                         <img src={HomeIcon} alt="Home" className="w-6 h-6" />
-                        <span className={`text-sm mt-1 ${location.pathname === '/' ? 'text-black border-b-2 border-black' : 'text-gray-500'}`}>Home</span>
+                        <span className={`text-sm mt-1 ${location.pathname === '/' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
+                            Home
+                            <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
+                        </span>
                     </Link>
-                    <Link to="/discover" className="flex flex-col items-center">
+                    <Link to="/discover" className="flex flex-col items-center group">
                         <img src={DiscoverIcon} alt="Discover" className="w-6 h-6" />
-                        <span className={`text-sm mt-1 ${location.pathname === '/discover' ? 'text-black border-b-2 border-black' : 'text-gray-500'}`}>Discover</span>
+                        <span className={`text-sm mt-1 ${location.pathname === '/discover' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
+                            Discover
+                            <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/discover' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
+                        </span>
                     </Link>
-                    <Link to="/profile" className="flex flex-col items-center">
+                    <Link to="/profile" className="flex flex-col items-center group">
                         <img src={ProfileIcon} alt="Profile" className="w-6 h-6" />
-                        <span className={`text-sm mt-1 ${location.pathname === '/profile' ? 'text-black border-b-2 border-black' : 'text-gray-500'}`}>Profile</span>
+                        <span className={`text-sm mt-1 ${location.pathname === '/profile' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
+                            Profile
+                            <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/profile' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
+                        </span>
                     </Link>
                 </div>
             </div>
