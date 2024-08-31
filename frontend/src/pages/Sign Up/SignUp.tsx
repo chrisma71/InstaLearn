@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import User from './assets/UserIcon.png';
 import Email from './assets/EmailIcon.png';
 import Password from './assets/LockIcon.png';
@@ -23,16 +24,29 @@ const SignUpPage: React.FC = () => {
         }
     }, [username, email, password, confirmPassword]);
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
         }
-
-        // Proceed with the signup process
-        alert("Registration successful!");
-        navigate('/course-home');
+    
+        try {
+            const response = await axios.post('http://localhost:5000/api/users/register', {
+                username,
+                email,
+                password,
+            });
+    
+            if (response.status === 201) {
+                alert("Registration successful!");
+                navigate('/course-home');  // Replace with your actual route after signup
+            }
+        } catch (error) {
+            console.error("There was an error registering the user:", error);
+            alert("Error during registration. Please try again.");
+        }
     };
+    
 
     return (
         <div className="relative flex justify-center items-center h-screen w-screen">
@@ -142,7 +156,7 @@ const SignUpPage: React.FC = () => {
                                 ? 'bg-green-600 hover:bg-green-700'
                                 : 'bg-[#b1b1b1] hover:bg-[#b1b1b1]'
                         } transition-colors`}
-                        onClick={handleSignUp}
+                        onClick={isButtonEnabled ? handleSignUp : undefined}
                     >
                         Continue
                     </div>
