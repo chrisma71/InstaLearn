@@ -26,7 +26,7 @@ const AppNavbar: React.FC = () => {
                     <img src={SearchIcon} alt="Search" className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4" />
                 </div>
                 <div className="flex space-x-6">
-                    <Link to="/" className="flex flex-col items-center group">
+                    <Link to="/fyp" className="flex flex-col items-center group">
                         <img src={HomeIcon} alt="Home" className="w-6 h-6" />
                         <span className={`text-sm mt-1 ${location.pathname === '/' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
                             Home
