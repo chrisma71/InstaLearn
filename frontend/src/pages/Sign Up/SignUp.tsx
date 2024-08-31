@@ -39,7 +39,7 @@ const SignUpPage: React.FC = () => {
     
             if (response.status === 201) {
                 alert("Registration successful!");
-                navigate('/course-home');  // Replace with your actual route after signup
+                navigate('/profile');  // Replace with your actual route after signup
             }
         } catch (error) {
             console.error("There was an error registering the user:", error);
