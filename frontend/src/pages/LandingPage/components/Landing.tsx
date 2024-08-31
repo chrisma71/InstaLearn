@@ -4,7 +4,7 @@ import Polygon from './assets/Polygon 1.png';
 
 const Landing: React.FC = () => {
   return (
-    <section className="bg-[#E5D4C0] min-h-screen w-full flex flex-col justify-between font-ubuntu">
+    <section id="product" className="bg-[#E5D4C0] min-h-screen w-full flex flex-col justify-between font-ubuntu">
       <div className="w-full flex items-center" style={{ minHeight: 'calc(100vh - 150px)' }}>
         <div className="w-full pl-44">
           <h2 className='text-2xl font-bold text-gray-600 tracking-wider'>Company Name Here</h2>

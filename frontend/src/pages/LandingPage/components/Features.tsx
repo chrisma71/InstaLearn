@@ -36,7 +36,7 @@ const features = [
 
 const Features: React.FC = () => {
   return (
-    <section className="bg-white h-screen flex flex-col justify-center pt-16 relative">
+    <section id="solutions" className="bg-white h-screen flex flex-col justify-center pt-16 relative">
       <div className="container mx-auto px-6 flex-1 flex flex-col justify-center">
         {/* Top row with 3 boxes */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
