@@ -23,7 +23,7 @@ const connectDB = async () => {
     }
 };
 
-//connectDB();
+connectDB();
 
 const userRoutes = require('./routes/userRoutes');
 
