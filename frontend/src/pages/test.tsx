@@ -1,12 +1,28 @@
-// src/pages/TestPage.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import LiveStream from '../components/Livestream';
 
-const TestPage: React.FC = () => {
+const App: React.FC = () => {
+  const [playbackId, setPlaybackId] = useState<string>('');
+
+  useEffect(() => {
+    async function fetchPlaybackId() {
+      const response = await fetch('http://localhost:5000/api/create-live-stream');
+      const data = await response.json();
+      setPlaybackId(data.playback_ids[0].id);
+    }
+
+    fetchPlaybackId();
+  }, []);
+
   return (
-    <div className="flex justify-center items-center h-screen bg-blue-100">
-      <h1 className="text-4xl font-bold text-gray-800">caden chen is a pookie</h1>
+    <div className="App">
+      {playbackId ? (
+        <LiveStream playbackId={playbackId} />
+      ) : (
+        <p>Loading stream...</p>
+      )}
     </div>
   );
 };
 
-export default TestPage;
+export default App;
