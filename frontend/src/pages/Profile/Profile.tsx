@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie'; 
 import PlusIcon from './assets/Plus.svg';
-import CloseIcon from './assets/Close.svg'; // Add your close icon SVG here
+import CloseIcon from './assets/Close.svg';
 
 const Profile: React.FC = () => {
-    const [academicInterests, setAcademicInterests] = useState<string[]>([
-        'Mathematics',
-        'Artificial Intelligence (AI)',
-        'Science',
-        'Chemistry',
-        'Edging'
-    ]);
-
-    const [goalsProjects, setGoalsProjects] = useState<string[]>([
-        'Mathematics',
-        'Artificial Intelligence (AI)',
-        'Science',
-        'Chemistry',
-        'Edging'
-    ]);
-
+    const [academicInterests, setAcademicInterests] = useState<string[]>([]);
+    const [goalsProjects, setGoalsProjects] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [newItem, setNewItem] = useState('');
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            const username = Cookies.get('username');
+
+            if (!username) {
+                console.error('Username not found in cookies');
+                return;
+            }
+
+            try {
+                const response = await axios.get('http://localhost:5000/api/users/profile', {
+                    params: { username }
+                });
+                const { interests, goals } = response.data;
+                setAcademicInterests(interests);
+                setGoalsProjects(goals);
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+            }
+        };
+
+        fetchProfileData();
+    }, []);
 
     const openModal = (title: string) => {
         setModalTitle(title);
@@ -40,20 +52,41 @@ const Profile: React.FC = () => {
         setIsButtonEnabled(value.trim() !== '');
     };
 
-    const handleAddItem = () => {
+    const handleAddItem = async () => {
         if (newItem.trim()) {
             if (modalTitle === 'Add Interest') {
                 setAcademicInterests([...academicInterests, newItem]);
+                await updateUserProfile([...academicInterests, newItem], goalsProjects);
             } else if (modalTitle === 'Add Project') {
                 setGoalsProjects([...goalsProjects, newItem]);
+                await updateUserProfile(academicInterests, [...goalsProjects, newItem]);
             }
             closeModal();
         }
     };
 
+    const updateUserProfile = async (interests: string[], goals: string[]) => {
+        const username = Cookies.get('username');
+
+        if (!username) {
+            console.error('Username not found in cookies');
+            return;
+        }
+
+        try {
+            const response = await axios.put('http://localhost:5000/api/users/profile', {
+                username,
+                interests,
+                goals
+            });
+            console.log(response.data.message);
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-6 w-screen relative">
-            {/* Academic Interests Section */}
             <div className="mb-6 p-4 bg-white border border-gray-400 rounded-lg shadow-sm w-full max-w-2xl">
                 <div className="flex justify-between items-center mb-2">
                     <h2 className="text-xl font-semibold">Academic Interests</h2>
@@ -75,7 +108,6 @@ const Profile: React.FC = () => {
                 </div>
             </div>
 
-            {/* Goals/Projects Section */}
             <div className="p-4 bg-white border border-gray-400 rounded-lg shadow-sm w-full max-w-2xl">
                 <div className="flex justify-between items-center mb-2">
                     <h2 className="text-xl font-semibold">Goals/Projects</h2>
@@ -99,7 +131,6 @@ const Profile: React.FC = () => {
                 </div>
             </div>
 
-            {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">

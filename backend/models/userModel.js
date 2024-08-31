@@ -16,6 +16,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    interests: {
+        type: [String], 
+        default: [],   
+    },
+    goals: {
+        type: [String], 
+        default: [],  
+    },
 }, {
     timestamps: true, 
 });

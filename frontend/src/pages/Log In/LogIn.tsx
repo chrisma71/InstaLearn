@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import User from './assets/UserIcon.png';
 import Password from './assets/LockIcon.png';
 import Background from './assets/BG.png'; 
 
 const LoginPage: React.FC = () => {
-    const [identifier, setIdentifier] = useState(''); // Can be username or email
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Enable the button if all fields are filled
         if (identifier && password) {
             setIsButtonEnabled(true);
         } else {
@@ -29,7 +29,8 @@ const LoginPage: React.FC = () => {
 
             if (response.status === 200) {
                 alert("Login successful!");
-                navigate('/');  // Replace with your actual route after login
+                Cookies.set('username', response.data.user.username, { expires: 30 });
+                navigate('/');  
             }
         } catch (error) {
             console.error("There was an error logging in the user:", error);
@@ -39,7 +40,6 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="relative flex justify-center items-center h-screen w-screen">
-            {/* Background Image */}
             <div
                 className="absolute inset-0 bg-cover bg-center z-[-1]"
                 style={{ backgroundImage: `url(${Background})` }}
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
             <div 
                 className="border border-[#B1B1B1] p-8 rounded-xl bg-white bg-opacity-90"
                 style={{
-                    backgroundColor: '#FFFFFF', // Fill color
+                    backgroundColor: '#FFFFFF',
                     boxShadow: 'inset 0px 2px 3.8px rgba(0, 0, 0, 0.5)',
                 }}
             >
