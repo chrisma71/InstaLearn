@@ -1,13 +1,13 @@
-import TestPage from './pages/test'
-import './App.css'
+// src/App.tsx
+import React from 'react';
+import LandingPage from './pages/LandingPage/LandingPage';
 
-function App() {
-
+const App: React.FC = () => {
   return (
     <div>
-      <TestPage />
+      <LandingPage />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
