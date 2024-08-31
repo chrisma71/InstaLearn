@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const uploadRoutes = require('./routes/uploadRoutes.js');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -27,6 +28,7 @@ connectDB();
 
 const userRoutes = require('./routes/userRoutes');
 
+app.use('/api', uploadRoutes);
 app.use('/api/users', userRoutes);
 
 app.listen(port, () => {
