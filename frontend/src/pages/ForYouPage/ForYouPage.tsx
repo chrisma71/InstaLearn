@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import AppNavbar from '../App Navbar/AppNavbar';
 import ArticleIcon from './assets/ArticleIcon.svg';
 import VideoIcon from './assets/VideoIcon.svg';
@@ -37,52 +38,57 @@ const ForYouPage: React.FC = () => {
     const [mediaData, setMediaData] = useState<MediaData[]>([]);
     const [loading, setLoading] = useState(false);
 
+    const fetchUserGoals = async (username: string) => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/users/profile', {
+                params: { username }
+            });
+            return response.data.goals;
+        } catch (error) {
+            console.error('Error fetching user goals:', error);
+            return '';
+        }
+    };
+
+    const generateContent = async (goals: string) => {
+        setLoading(true);
+        try {
+            const prompt = `
+              Create a list of articles, resources, or videos, based on someone whose goals are ${goals}. Have 10 per goal. Have a fun description!
+              Provide the list in the following JSON format:
+              {
+                "links": [
+                  {"type": "article" | "video" | "live", "url": "https://example.com/article", "title": "Example Title", "description": "Example Description"}
+                ]
+              }
+            `;
+            const response = await axios.post('http://localhost:5000/api/upload', { prompt });
+            const rawLinksData = response.data.description;
+            const jsonString = rawLinksData.replace(/```json\n|\n```/g, '').trim();
+            const linksData = JSON.parse(jsonString);
+
+            setMediaData(linksData.links);
+        } catch (error) {
+            console.error('Error generating content:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const generateContent = async () => {
-            setLoading(true);
-            try {
-                const prompt = `
-                  Create a list of 10 educational articles, resources, or videos, based on someone wanting to start learning the quadratic formula. Have a fun description!
-                  Provide the list in the following JSON format:
-                  {
-                    "links": [
-                      {"type": "article" | "video" | "live", "url": "https://example.com/article", "title": "Example Title", "description": "Example Description"}
-                    ]
-                  }
-                `;
-                const response = await axios.post('http://localhost:5000/api/upload', { prompt });
-                const rawLinksData = response.data.description;
-                console.log(rawLinksData);
-                const jsonString = rawLinksData.replace(/```json\n|\n```/g, '').trim();
-                const linksData = JSON.parse(jsonString);
+        const fetchGoalsAndGenerateContent = async () => {
+            const username = Cookies.get('username');
 
-                setMediaData(linksData.links);
-
-                // Uncomment if using LinkPreview API
-                /*
-                const previews = await Promise.all(
-                    linksData.links.map(async (link: { type: string; url: string }) => {
-                        const previewResponse = await axios.get('http://localhost:5000/api/preview', {
-                            params: { url: link.url }
-                        });
-                        return {
-                            type: link.type as 'article' | 'video' | 'live',
-                            url: link.url,
-                            title: previewResponse.data.title,
-                            description: previewResponse.data.description
-                        };
-                    })
-                );
-                setMediaData(previews);
-                */
-            } catch (error) {
-                console.error('Error generating content:', error);
-            } finally {
-                setLoading(false);
+            if (!username) {
+                console.error('Username not found in cookies');
+                return;
             }
+
+            const goals = await fetchUserGoals(username);
+            await generateContent(goals);
         };
 
-        generateContent();
+        fetchGoalsAndGenerateContent();
     }, []);
 
     return (
