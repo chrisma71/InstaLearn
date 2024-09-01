@@ -67,31 +67,42 @@ const QuizPage: React.FC = () => {
   const handleAddToInterests = async () => {
     if (currentNode && username) {
       try {
-        await axios.put('http://localhost:5000/api/users/profile', {
-          username,
-          interests: [currentNode],
+        const { data } = await axios.get(`http://localhost:5000/api/users/profile`, {
+          params: { username }
         });
+        const updatedInterests = [...data.interests, currentNode];
+        const response = await axios.put('http://localhost:5000/api/users/profile', {
+          username,
+          interests: updatedInterests,
+        });
+        console.log(response.data.message);
         alert(`${currentNode} added to interests!`);
       } catch (error) {
         console.error('Error adding to interests:', error);
       }
     }
   };
+  
 
   const handleAddToGoals = async () => {
     if (currentNode && username) {
       try {
-        await axios.put('http://localhost:5000/api/users/profile', {
-          username,
-          goals: [currentNode],
+        const { data } = await axios.get(`http://localhost:5000/api/users/profile`, {
+          params: { username }
         });
+        const updatedGoals = [...data.goals, currentNode];
+        const response = await axios.put('http://localhost:5000/api/users/profile', {
+          username,
+          goals: updatedGoals,
+        });
+        console.log(response.data.message);
         alert(`${currentNode} added to goals!`);
       } catch (error) {
         console.error('Error adding to goals:', error);
       }
     }
   };
-
+  
   return (
     <div className="h-screen w-screen overflow-hidden">
       <AppNavbar />
