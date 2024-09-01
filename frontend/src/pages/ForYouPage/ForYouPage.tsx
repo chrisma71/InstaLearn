@@ -58,11 +58,11 @@ const ForYouPage: React.FC = () => {
         setLoading(true);
         try {
             const prompt = `
-              Create a list of articles, resources, or videos, based on someone whose goals are ${goals}. Have 10 per goal. Have a fun description!
+              Create a list of articles, resources, or videos, based on someone whose goals are ${goals}. Have 5 per goal. Make sure the websites actually exist. Have a fun description!
               Provide the list in the following JSON format:
               {
                 "links": [
-                  {"type": "article" | "video" | "live", "url": "https://example.com/article", "title": "Example Title", "description": "Example Description"}
+                  {"type": "article" | "video" | "live", "url": "urlhere", "title": "Example Title", "description": "Example Description"}
                 ]
               }
             `;
