@@ -6,6 +6,7 @@ import SignUpPage from './pages/Sign Up/SignUp';
 import LoginPage from './pages/Log In/LogIn';
 import ProfilePage from './pages/Profile/Profile'; // Import the Profile component
 import ForYouPage from './pages/ForYouPage/ForYouPage';
+import QuizPage from './pages/Quiz/QuizPage';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} /> {/* Add the profile route */}
         <Route path="/fyp" element={<ForYouPage />} />
+        <Route path="/quiz" element={<QuizPage />} />
       </Routes>
     </Router>
   );

@@ -51,16 +51,6 @@ const NavBar: React.FC = () => {
           >
             Solutions
           </a>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('bottom');
-            }}
-            className="text-gray-800 hover:text-green-600"
-          >
-            PlaceHolder
-          </a>
         </div>
 
         {/* Sign In/Sketch buttons */}
