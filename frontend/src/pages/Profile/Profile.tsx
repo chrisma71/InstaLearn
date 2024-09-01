@@ -87,38 +87,37 @@ const Profile: React.FC = () => {
     };
 
     return (
-        <div className='relative'>
-            <div className='absolute top-0 left-0 w-full z-10'>
+        <div className='relative min-h-screen overflow-x-hidden'>
+            <div className='w-full z-10'>
                 <AppNavbar />
             </div>
 
-            <div className="flex flex-col items-center justify-center min-h-screen p-6 w-screen relative">
-                <div className="mb-6 p-4 bg-white border border-gray-400 rounded-lg shadow-sm w-full max-w-2xl">
-                    <div className="flex justify-between items-center mb-2">
-                        <h2 className="text-xl font-semibold">Academic Interests</h2>
+            <div className="flex flex-col md:flex-row items-start justify-around min-h-screen p-6 w-full space-y-6 md:space-y-0 md:space-x-6"> 
+                <div className="p-4 bg-white rounded-lg shadow-sm w-full md:w-5/12 flex flex-col"> 
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-lg md:text-xl font-semibold text-[#00695C]">Academic Interests</h2>
                         <div
-                            className="text-gray-500 hover:text-gray-700 cursor-pointer transform transition-transform duration-200 hover:scale-110"
+                            className="text-white cursor-pointer transform transition-transform duration-200 hover:scale-110"
                             onClick={() => openModal('Add Interest')}
                         >
                             <img src={PlusIcon} alt="Add" className="w-6 h-6" />
                         </div>
                     </div>
                     <p className="text-gray-500 mb-4">Add some interests for our algorithm to better personalize your feed.</p>
-                    <hr className="border-gray-300 mb-4" />
-                    <div>
+                    <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexGrow: 1 }}> {/* Stacked items vertically with scroll */}
                         {academicInterests.map((interest, index) => (
-                            <div key={index} className="text-gray-800 mb-2">
+                            <div key={index} className="px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 inline-block w-min">
                                 {interest}
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="p-4 bg-white border border-gray-400 rounded-lg shadow-sm w-full max-w-2xl">
-                    <div className="flex justify-between items-center mb-2">
-                        <h2 className="text-xl font-semibold">Goals/Projects</h2>
+                <div className="p-4 bg-white rounded-lg shadow-sm w-full md:w-5/12 flex flex-col">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-lg md:text-xl font-semibold text-[#00695C]">Goals/Projects</h2>
                         <div
-                            className="text-gray-500 hover:text-gray-700 cursor-pointer transform transition-transform duration-200 hover:scale-110"
+                            className="text-white cursor-pointer transform transition-transform duration-200 hover:scale-110"
                             onClick={() => openModal('Add Project')}
                         >
                             <img src={PlusIcon} alt="Add" className="w-6 h-6" />
@@ -127,10 +126,9 @@ const Profile: React.FC = () => {
                     <p className="text-gray-500 mb-4">
                         Set your goals and ongoing projects here. This will help our algorithm understand your aspirations and see what you’re working on, making it easier to support your journey.
                     </p>
-                    <hr className="border-gray-300 mb-4" />
-                    <div>
+                    <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexGrow: 1 }}> {/* Stacked items vertically with scroll */}
                         {goalsProjects.map((project, index) => (
-                            <div key={index} className="text-gray-800 mb-2">
+                            <div key={index} className="px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 inline-block w-min">
                                 {project}
                             </div>
                         ))}
@@ -139,7 +137,7 @@ const Profile: React.FC = () => {
 
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                        <div className="bg-white rounded-lg shadow-lg w-96 relative">
                             <div className="flex justify-between items-center mb-4">
                                 <h1 className="text-xl font-semibold">{modalTitle}</h1>
                                 <div

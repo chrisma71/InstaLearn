@@ -63,13 +63,15 @@ const NavBar: React.FC = () => {
           </a>
         </div>
 
-        {/* Sign In/Sign Up buttons */}
+        {/* Sign In/Sketch buttons */}
         <div className="hidden md:flex space-x-4">
           <Link to="/login" className="text-gray-800 hover:text-green-600 flex items-center">
-            Sign in
+            Sign In
           </Link>
-          <Link to="/signup" className="border-2 border-green-600 text-green-600 px-4 py-2 rounded-md hover:bg-green-600 hover:text-white">
-            Sign up
+          <Link to="/signup" className="flex items-center">
+            <div className="cursor-pointer px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">
+              Sign Up
+            </div>
           </Link>
         </div>
       </div>

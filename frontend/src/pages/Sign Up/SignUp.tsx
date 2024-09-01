@@ -60,7 +60,6 @@ const SignUpPage: React.FC = () => {
                 className="border border-[#B1B1B1] p-8 rounded-xl bg-white bg-opacity-90"
                 style={{
                     backgroundColor: '#FFFFFF', // Fill color
-                    boxShadow: 'inset 0px 2px 3.8px rgba(0, 0, 0, 0.5)',
                 }}
             >
                 <h1 className="text-center text-2xl text-black font-semibold mb-8">Sign Up</h1>

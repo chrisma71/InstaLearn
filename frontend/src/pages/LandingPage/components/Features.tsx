@@ -1,10 +1,11 @@
+// src/pages/LandingPage/components/Features.tsx
 import React from 'react';
 import LiveIcon from './assets/Live.svg';
 import LearningIcon from './assets/Leaning.svg';
 import RecordIcon from './assets/Record.svg';
 import AnalyticsIcon from './assets/Analytics.svg';
 import LockIcon from './assets/Lock.svg';
-import PolygonIcon from './assets/Polygon 2.png';
+import Elipse from './assets/Elipse-Bottom.svg';
 
 const features = [
   {
@@ -65,8 +66,10 @@ const Features: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 w-full object-contain">
-        <img src={PolygonIcon} alt="Breaker" className="w-full" />
+
+      {/* Elipse SVG Positioned Off-Screen with Top Showing */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center">
+        <img src={Elipse} alt="Elipse Decoration" className="w-full max-w-none" style={{ marginBottom: '-10%' }} />
       </div>
     </section>
   );
