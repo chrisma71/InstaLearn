@@ -1,40 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ProgressionTree from './components/ProgressionTree';
-import Quiz from './components/Quiz';
 
 const QuizPage: React.FC = () => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-
-  const handleAnswerSelect = (answer: string) => {
-    setSelectedAnswer(answer);
-    // You can also handle what happens after selecting an answer here
-  };
-
-  const quizQuestion = "What is the derivative of x^2?";
-  const quizOptions = [
-    "2x",
-    "x",
-    "x^2",
-    "2"
-  ];
-
   return (
-    <div className="flex flex-row">
-      <div className="w-1/2">
+    <div style={{ display: 'flex', height: '100vh' }}>
+      {/* Left half: Progression Tree */}
+      <div style={{ width: '50vw', height: '100vh' }}>
         <ProgressionTree />
       </div>
-      <div className="w-1/2 p-4">
+
+      {/* Right half: Quiz Section */}
+      <div style={{ width: '50vw', height: '100vh', padding: '20px', overflowY: 'auto', backgroundColor: '#f9f9f9' }}>
         <h2>Quiz Section</h2>
-        <Quiz 
-          question={quizQuestion} 
-          options={quizOptions} 
-          onAnswerSelect={handleAnswerSelect} 
-        />
-        {selectedAnswer && (
-          <p className="mt-4">
-            You selected: <strong>{selectedAnswer}</strong>
-          </p>
-        )}
+        <p>Here you can add your quiz questions and content.</p>
+        {/* Example Question */}
+        <div style={{ marginBottom: '20px' }}>
+          <h3>What is the derivative of x^2?</h3>
+          <ul>
+            <li><input type="radio" name="q1" /> 2x</li>
+            <li><input type="radio" name="q1" /> x</li>
+            <li><input type="radio" name="q1" /> 2</li>
+            <li><input type="radio" name="q1" /> 1</li>
+          </ul>
+        </div>
+        {/* Add more questions here */}
       </div>
     </div>
   );
