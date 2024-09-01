@@ -33,10 +33,10 @@ const AppNavbar: React.FC = () => {
                             <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
                         </span>
                     </Link>
-                    <Link to="/discover" className="flex flex-col items-center group">
+                    <Link to="/quiz" className="flex flex-col items-center group">
                         <img src={DiscoverIcon} alt="Discover" className="w-6 h-6" />
                         <span className={`text-sm mt-1 ${location.pathname === '/discover' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
-                            Discover
+                            Learn
                             <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/discover' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
                         </span>
                     </Link>

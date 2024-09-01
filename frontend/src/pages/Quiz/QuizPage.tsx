@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ProgressionTree from './components/ProgressionTree';
 import AppNavbar from '../App Navbar/AppNavbar';
 import axios from 'axios';
+import Cookies from 'js-cookie';                   
 
 const QuizPage: React.FC = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -12,6 +13,9 @@ const QuizPage: React.FC = () => {
     correctAnswer: "",
     explanation: "",
   });
+  const [currentNode, setCurrentNode] = useState<string | null>(null);
+
+  const username = Cookies.get('username');      
 
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
@@ -19,6 +23,11 @@ const QuizPage: React.FC = () => {
   };
 
   const handleNodeClick = async (nodeName: string) => {
+    setCurrentNode(nodeName);
+    generateQuizQuestion(nodeName);
+  };
+
+  const generateQuizQuestion = async (nodeName: string) => {
     try {
       const prompt = `
         Generate a quiz question based on the topic "${nodeName}". Provide four answer options, specify the correct answer, and provide a brief explanation. The correct answer will be randomly placed.
@@ -32,7 +41,6 @@ const QuizPage: React.FC = () => {
       `;
       const response = await axios.post('http://localhost:5000/api/upload', { prompt });
       const quizContent = response.data.description;
-      console.log(quizContent)
       const quizJson = quizContent.replace(/```json\n|\n```/g, '').trim();
       const newQuizData = JSON.parse(quizJson);
 
@@ -50,80 +58,105 @@ const QuizPage: React.FC = () => {
     }
   };
 
+  const handleNextQuestion = () => {
+    if (currentNode) {
+      generateQuizQuestion(currentNode);
+    }
+  };
+
+  const handleAddToInterests = async () => {
+    if (currentNode && username) {
+      try {
+        await axios.put('http://localhost:5000/api/users/profile', {
+          username,
+          interests: [currentNode],
+        });
+        alert(`${currentNode} added to interests!`);
+      } catch (error) {
+        console.error('Error adding to interests:', error);
+      }
+    }
+  };
+
+  const handleAddToGoals = async () => {
+    if (currentNode && username) {
+      try {
+        await axios.put('http://localhost:5000/api/users/profile', {
+          username,
+          goals: [currentNode],
+        });
+        alert(`${currentNode} added to goals!`);
+      } catch (error) {
+        console.error('Error adding to goals:', error);
+      }
+    }
+  };
+
   return (
-    <div style={{ height: '100vh', overflow: 'hidden' }}>
+    <div className="h-screen w-screen overflow-hidden">
       <AppNavbar />
 
-      <div style={{ display: 'flex', height: 'calc(100vh - 60px)' }}>
-        <div
-          style={{
-            width: '50vw',
-            height: '100%',
-            padding: '20px',
-            backgroundColor: '#ffffff',
-            borderRadius: '10px',
-            border: '1px solid #ddd',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            margin: '10px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div style={{ flexGrow: 1 }}>
+      <div className="flex h-[calc(100vh-60px)]">
+        <div className="w-1/2 h-full p-5 bg-white rounded-lg border border-gray-300 shadow-md m-2 flex flex-col">
+          <div className="flex-grow">
             <ProgressionTree onNodeClick={handleNodeClick} />
           </div>
         </div>
 
-        <div
-          style={{
-            width: '50vw',
-            height: '100%',
-            padding: '20px',
-            overflowY: 'auto',
-            backgroundColor: '#f9f9f9',
-            borderRadius: '10px',
-            border: '1px solid #ddd',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            margin: '10px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <h2 style={{ marginBottom: '40px' }}>{quizData.question}</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <div className="w-1/2 h-full p-5 overflow-y-auto bg-gray-50 rounded-lg border border-gray-300 shadow-md m-2 flex flex-col justify-center items-center">
+          {currentNode && (
+            <h3 className="mb-4 text-center text-lg font-semibold text-blue-600">
+              Topic: {currentNode}
+            </h3>
+          )}
+          <h2 className="mb-10 text-center text-xl font-semibold">{quizData.question}</h2>
+          <div className="grid grid-cols-2 gap-5">
             {quizData.answers.map((answer, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswerClick(answer)}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: '15px 30px',
-                  borderRadius: '20px',
-                  backgroundColor: selectedAnswer === answer ? '#007bff' : '#f0f0f0',
-                  color: selectedAnswer === answer ? '#fff' : '#000',
-                  border: '1px solid #ccc',
-                  cursor: 'pointer',
-                  fontSize: '16px',
-                  width: '180px',
-                  height: '60px',
-                }}
+                className={`flex justify-center items-center p-3 rounded-lg font-medium text-center ${
+                  selectedAnswer === answer
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-black hover:bg-gray-300'
+                } border border-gray-300 cursor-pointer min-w-[180px]`}
+                style={{ minHeight: '60px', height: 'auto' }}
               >
                 {answer}
               </button>
             ))}
           </div>
           {showExplanation && (
-            <div style={{ marginTop: '40px', textAlign: 'center' }}>
-              <h4 style={{ color: selectedAnswer === quizData.correctAnswer ? 'green' : 'red' }}>
+            <div className="mt-10 text-center">
+              <h4 className={selectedAnswer === quizData.correctAnswer ? 'text-green-500' : 'text-red-500'}>
                 {selectedAnswer === quizData.correctAnswer ? 'Correct!' : 'Incorrect.'}
               </h4>
               <p>{quizData.explanation}</p>
             </div>
           )}
+          <div className="mt-10 flex space-x-4">
+            <button
+              onClick={handleNextQuestion}
+              className="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              disabled={!currentNode}
+            >
+              Next Question
+            </button>
+            <button
+              onClick={handleAddToInterests}
+              className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              disabled={!currentNode}
+            >
+              Add to Interests
+            </button>
+            <button
+              onClick={handleAddToGoals}
+              className="px-5 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              disabled={!currentNode}
+            >
+              Add to Goals
+            </button>
+          </div>
         </div>
       </div>
     </div>
