@@ -7,7 +7,9 @@ import VideoIcon from './assets/VideoIcon.svg';
 import LiveIcon from './assets/LiveIcon.svg';
 import LinkIcon from './assets/LinkIcon.svg';
 import LikeIcon from './assets/LikeIcon.svg';
+import LikedIcon from './assets/Liked.svg';
 import SaveIcon from './assets/SaveIcon.svg';
+import SavedIcon from './assets/Saved.svg';
 
 interface MediaData {
     type: 'article' | 'video' | 'live';
@@ -37,6 +39,8 @@ const extractYouTubeId = (url: string): string | null => {
 const ForYouPage: React.FC = () => {
     const [mediaData, setMediaData] = useState<MediaData[]>([]);
     const [loading, setLoading] = useState(false);
+    const [likedItems, setLikedItems] = useState<{ [key: number]: boolean }>({});
+    const [savedItems, setSavedItems] = useState<{ [key: number]: boolean }>({}); // State for saved items
 
     const fetchUserGoals = async (username: string) => {
         try {
@@ -91,6 +95,14 @@ const ForYouPage: React.FC = () => {
         fetchGoalsAndGenerateContent();
     }, []);
 
+    const toggleLike = (index: number) => {
+        setLikedItems((prev) => ({ ...prev, [index]: !prev[index] }));
+    };
+
+    const toggleSave = (index: number) => {
+        setSavedItems((prev) => ({ ...prev, [index]: !prev[index] }));
+    };
+
     return (
         <div className="w-screen relative border-2 h-screen">
             <div className="absolute top-0 left-0 w-full">
@@ -135,13 +147,25 @@ const ForYouPage: React.FC = () => {
                                 <hr className="my-4 border-gray-300" />
                                 <div className="px-4">
                                     <div className="flex justify-start space-x-4">
-                                        <div className="flex items-center space-x-2 cursor-pointer">
-                                            <img src={LikeIcon} alt="Like" className="w-5 h-5 flex-shrink-0" />
-                                            <span className="text-sm text-gray-600">Like</span>
+                                        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => toggleLike(index)}>
+                                            <img
+                                                src={likedItems[index] ? LikedIcon : LikeIcon}
+                                                alt={likedItems[index] ? 'Liked' : 'Like'}
+                                                className="w-5 h-5 flex-shrink-0"
+                                            />
+                                            <span className={`text-sm ${likedItems[index] ? 'text-red-500' : 'text-gray-600'}`}>
+                                                {likedItems[index] ? 'Liked' : 'Like'}
+                                            </span>
                                         </div>
-                                        <div className="flex items-center space-x-2 cursor-pointer">
-                                            <img src={SaveIcon} alt="Save" className="w-5 h-5 flex-shrink-0" />
-                                            <span className="text-sm text-gray-600">Save</span>
+                                        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => toggleSave(index)}>
+                                            <img
+                                                src={savedItems[index] ? SavedIcon : SaveIcon}
+                                                alt={savedItems[index] ? 'Saved' : 'Save'}
+                                                className="w-5 h-5 flex-shrink-0"
+                                            />
+                                            <span className={`text-sm ${savedItems[index] ? 'text-yellow-500' : 'text-gray-600'}`}>
+                                                {savedItems[index] ? 'Saved' : 'Save'}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
