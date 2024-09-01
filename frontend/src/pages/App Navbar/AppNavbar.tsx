@@ -4,6 +4,7 @@ import SearchIcon from './assets/Search.svg';
 import HomeIcon from './assets/Home.svg';
 import DiscoverIcon from './assets/Discover.svg';
 import ProfileIcon from './assets/Profile.svg';
+import SaveIcon from './assets/SaveIcon.svg';
 
 const AppNavbar: React.FC = () => {
     const location = useLocation();
@@ -45,6 +46,13 @@ const AppNavbar: React.FC = () => {
                         <span className={`text-sm mt-1 ${location.pathname === '/profile' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
                             Profile
                             <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/profile' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
+                        </span>
+                    </Link>
+                    <Link to="/saved" className="flex flex-col items-center group">
+                        <img src={SaveIcon} alt="Profile" className="w-6 h-6" />
+                        <span className={`text-sm mt-1 ${location.pathname === '/saved' ? 'text-black' : 'text-gray-500'} relative group-hover:text-black`}>
+                            Saved
+                            <span className={`absolute left-0 bottom-0 h-[1px] w-full bg-black transform ${location.pathname === '/saved' ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100 transition-transform duration-300 origin-left`}></span>
                         </span>
                     </Link>
                 </div>

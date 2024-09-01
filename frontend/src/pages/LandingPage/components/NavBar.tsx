@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './assets/Logo.svg';
 
 const NavBar: React.FC = () => {
 
@@ -19,13 +20,13 @@ const NavBar: React.FC = () => {
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
         {/* Company Logo or Name */}
         <div className="text-2xl font-bold text-gray-800">
-          <a href="/" className="flex items-center">
+          <a href="/" className="flex items-center text-black">
             <img
-              src="/path-to-logo.png" // Replace with your logo's path if you have one
+              src={Logo} // Replace with your logo's path if you have one
               alt="Company Logo"
-              className="w-8 h-8 mr-2"
+              className="w-12 h-12 mr-2"
             />
-            Company Name
+            InstaLearn
           </a>
         </div>
 

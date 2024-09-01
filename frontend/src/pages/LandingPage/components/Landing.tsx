@@ -19,11 +19,11 @@ const Landing: React.FC = () => {
             .
           </h1>
           <p className="mt-4 text-xl text-gray-700 flex flex-col space-y-2 text-left">
-            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Personalize every lesson.</p></span>
-            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Engage students instantly.</p></span>
-            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Streamline your teaching process.</p></span>
-            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Create interactive experiences.</p></span>
-            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Trusted by educators worldwide.</p></span>
+            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Tailored Learning Journeys.</p></span>
+            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Engaging, High-Quality Content.</p></span>
+            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Interactive Learning Tools.</p></span>
+            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Streamlined Goal Management.</p></span>
+            <span className='flex flex-row space-x-4'><img src={Check} alt="Check Mark"/> <p>Trusted by Learners and Educators.</p></span>
           </p>
         </div>
 

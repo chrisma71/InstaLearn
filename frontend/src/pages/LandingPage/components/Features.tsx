@@ -9,31 +9,32 @@ import Elipse from './assets/Elipse-Bottom.svg';
 
 const features = [
   {
-    icon: <img src={LiveIcon} alt="Live Interactive Sessions" className="object-contain transition-transform duration-300 hover:scale-105" />,
-    title: 'Live Interactive Sessions',
-    description: 'Engage students with live streaming, interactive polls, Q&A, and real-time feedback.',
+    icon: <img src={LiveIcon} alt="Personalized Profile Management" className="object-contain transition-transform duration-300 hover:scale-105" />,
+    title: 'Personalized Profile Management',
+    description: 'Define and manage your goals, projects, and interests all in one organized profile section.',
   },
   {
-    icon: <img src={LearningIcon} alt="Personalized Learning Paths" className="object-contain transition-transform duration-300 hover:scale-105" />,
-    title: 'Personalized Learning Paths',
-    description: 'Create customized learning paths using AI that adapt to each student\'s unique progress.',
+    icon: <img src={LearningIcon} alt="Curated Content Feed" className="object-contain transition-transform duration-300 hover:scale-105" />,
+    title: 'Curated Content Feed',
+    description: 'Receive a personalized feed of videos, live streams, and articles tailored to your interests.',
   },
   {
-    icon: <img src={RecordIcon} alt="Recorded Sessions & Replay" className="object-contain transition-transform duration-300 hover:scale-105" />,
-    title: 'Recorded Sessions & Replay',
-    description: 'Automatically record sessions, allowing students to replay and review lessons anytime.',
+    icon: <img src={RecordIcon} alt="Interactive Progression Tree" className="object-contain transition-transform duration-300 hover:scale-105" />,
+    title: 'Interactive Progression Tree',
+    description: 'Explore and learn new skills with a visual roadmap tailored to your chosen topics.',
   },
   {
-    icon: <img src={AnalyticsIcon} alt="Analytics & Insights" className="object-contain transition-transform duration-300 hover:scale-105" />,
-    title: 'Analytics & Insights',
-    description: 'Track student engagement and performance with detailed analytics and personalized feedback.',
+    icon: <img src={AnalyticsIcon} alt="Dynamic Quiz Creator" className="object-contain transition-transform duration-300 hover:scale-105" />,
+    title: 'Dynamic Quiz Creator',
+    description: 'Test your knowledge with automatically generated quizzes based on your learning path.',
   },
   {
-    icon: <img src={LockIcon} alt="Secure & Private" className="object-contain transition-transform duration-300 hover:scale-105" />,
-    title: 'Secure & Private',
-    description: 'Ensure data security with encryption, keeping all sessions and communications private.',
+    icon: <img src={LockIcon} alt="Goal-Oriented Learning" className="object-contain transition-transform duration-300 hover:scale-105" />,
+    title: 'Goal-Oriented Learning',
+    description: 'Align your learning activities with your personal and professional goals, and track your progress.',
   },
 ];
+
 
 const Features: React.FC = () => {
   return (
