@@ -1,21 +1,53 @@
 import React, { useState } from 'react';
 import ProgressionTree from './components/ProgressionTree';
 import AppNavbar from '../App Navbar/AppNavbar';
+import axios from 'axios';
 
 const QuizPage: React.FC = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
-
-  const quizData = {
-    question: "What is the derivative of x^2?",
-    answers: ["2x", "x^2", "2", "x"],
-    correctAnswer: "2x",
-    explanation: "The derivative of x^2 with respect to x is 2x, following the power rule.",
-  };
+  const [quizData, setQuizData] = useState({
+    question: "Click on a node to generate a quiz question.",
+    answers: ["", "", "", ""],
+    correctAnswer: "",
+    explanation: "",
+  });
 
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
     setShowExplanation(true);
+  };
+
+  const handleNodeClick = async (nodeName: string) => {
+    try {
+      const prompt = `
+        Generate a quiz question based on the topic "${nodeName}". Provide four answer options, specify the correct answer, and provide a brief explanation. The correct answer will be randomly placed.
+        Return the result in the following JSON format:
+        {
+          "question": "Your question here",
+          "answers": ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+          "correctAnswer": "The correct answer",
+          "explanation": "A brief explanation"
+        }
+      `;
+      const response = await axios.post('http://localhost:5000/api/upload', { prompt });
+      const quizContent = response.data.description;
+      console.log(quizContent)
+      const quizJson = quizContent.replace(/```json\n|\n```/g, '').trim();
+      const newQuizData = JSON.parse(quizJson);
+
+      setQuizData(newQuizData);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+    } catch (error) {
+      console.error('Error generating quiz question:', error);
+      setQuizData({
+        question: "Error generating question. Please try again.",
+        answers: ["", "", "", ""],
+        correctAnswer: "",
+        explanation: "",
+      });
+    }
   };
 
   return (
@@ -38,7 +70,7 @@ const QuizPage: React.FC = () => {
           }}
         >
           <div style={{ flexGrow: 1 }}>
-            <ProgressionTree />
+            <ProgressionTree onNodeClick={handleNodeClick} />
           </div>
         </div>
 
@@ -61,9 +93,9 @@ const QuizPage: React.FC = () => {
         >
           <h2 style={{ marginBottom: '40px' }}>{quizData.question}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            {quizData.answers.map((answer) => (
+            {quizData.answers.map((answer, index) => (
               <button
-                key={answer}
+                key={index}
                 onClick={() => handleAnswerClick(answer)}
                 style={{
                   display: 'flex',

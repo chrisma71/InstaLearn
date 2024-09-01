@@ -7,17 +7,21 @@ interface TreeNode {
   children?: TreeNode[];
 }
 
+interface ProgressionTreeProps {
+  onNodeClick: (nodeName: string) => void;
+}
+
 const containerStyles = {
   width: '100%',
   height: '100vh',
 };
 
-const renderCustomNode = ({ nodeDatum }: any) => {
+const renderCustomNode = ({ nodeDatum, onNodeClick }: any) => {
   const textLength = nodeDatum.name.length * 8;
   const boxWidth = textLength + 20;
 
   return (
-    <g>
+    <g onClick={() => onNodeClick(nodeDatum.name)}>
       <rect
         width={boxWidth}
         height="40"
@@ -36,7 +40,7 @@ const renderCustomNode = ({ nodeDatum }: any) => {
   );
 };
 
-const ProgressionTree: React.FC = () => {
+const ProgressionTree: React.FC<ProgressionTreeProps> = ({ onNodeClick }) => {
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
   const [subject, setSubject] = useState('');
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
@@ -76,7 +80,6 @@ const ProgressionTree: React.FC = () => {
 
       const response = await axios.post('http://localhost:5000/api/upload', { prompt });
       const rawTreeData = response.data.description;
-      console.log(rawTreeData)
       const jsonString = rawTreeData.replace(/```json\n|\n```/g, '').trim();
       const parsedTreeData = JSON.parse(jsonString);
 
@@ -140,7 +143,9 @@ const ProgressionTree: React.FC = () => {
           translate={translate}
           zoomable={true}
           zoom={0.7}
-          renderCustomNodeElement={renderCustomNode}
+          renderCustomNodeElement={(rd3tProps) =>
+            renderCustomNode({ ...rd3tProps, onNodeClick })
+          }
           nodeSize={{ x: 200, y: 100 }}
         />
       )}
