@@ -29,11 +29,14 @@ const connectDB = async () => {
 
 connectDB();
 
+const linkPreviewRoutes = require('./routes/linkPreviewRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 app.use('/api', uploadRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api', linkPreviewRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+

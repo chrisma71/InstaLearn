@@ -57,7 +57,7 @@ const Features: React.FC = () => {
           {features.slice(3).map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col items-center border-2 w-96 text-center h-48 transform transition-transform duration-300 hover:-translate-y-2 hover:scale-105"
+              className="flex flex-col items-center border-2 w-96 text-center h-48 transform transition-transform duration-400 hover:-translate-y-2 hover:scale-105"
             >
               {feature.icon}
               <h3 className="text-2xl font-bold mb-2">{feature.title}</h3>
