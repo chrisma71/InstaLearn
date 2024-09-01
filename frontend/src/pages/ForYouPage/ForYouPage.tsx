@@ -40,7 +40,7 @@ const ForYouPage: React.FC = () => {
     const [mediaData, setMediaData] = useState<MediaData[]>([]);
     const [loading, setLoading] = useState(false);
     const [likedItems, setLikedItems] = useState<{ [key: number]: boolean }>({});
-    const [savedItems, setSavedItems] = useState<{ [key: number]: boolean }>({}); // State for saved items
+    const [savedItems, setSavedItems] = useState<{ [key: number]: boolean }>({});
 
     const fetchUserGoals = async (username: string) => {
         try {
@@ -112,7 +112,17 @@ const ForYouPage: React.FC = () => {
                 <h1 className="text-2xl font-semibold mb-6 text-center">For You</h1>
 
                 {loading ? (
-                    <p className="text-center">Compiling your feed, please wait...</p>
+                    <div className="flex flex-col items-center space-y-4">
+                        <p className="text-center text-lg font-semibold">Compiling your feed, please wait...</p>
+                        <div className="relative flex w-full max-w-2xl animate-pulse gap-2 p-4 bg-white border border-gray-300 rounded-lg shadow-sm">
+                            <div className="h-12 w-12 rounded-full bg-slate-400"></div>
+                            <div className="flex-1">
+                                <div className="mb-1 h-5 w-3/5 rounded-lg bg-slate-400 text-lg"></div>
+                                <div className="h-5 w-[90%] rounded-lg bg-slate-400 text-sm"></div>
+                                <div className="mt-4 h-64 w-full rounded-lg bg-slate-400"></div> {/* Simulating video or large content */}
+                            </div>
+                        </div>
+                    </div>
                 ) : (
                     <div className="flex flex-col items-center space-y-4 overflow-y-auto" style={{ maxHeight: '80vh' }}>
                         {mediaData.map((media, index) => (
