@@ -137,7 +137,7 @@ const Profile: React.FC = () => {
 
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg shadow-lg w-96 relative">
+                        <div className="bg-white rounded-lg shadow-lg w-96 relative p-6">
                             <div className="flex justify-between items-center mb-4">
                                 <h1 className="text-xl font-semibold">{modalTitle}</h1>
                                 <div
