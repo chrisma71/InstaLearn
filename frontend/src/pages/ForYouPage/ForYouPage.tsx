@@ -28,6 +28,11 @@ const getIcon = (type: 'article' | 'video' | 'live') => {
     }
 };
 
+const extractYouTubeId = (url: string): string | null => {
+    const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    return videoIdMatch ? videoIdMatch[1] : null;
+};
+
 const ForYouPage: React.FC = () => {
     const [mediaData, setMediaData] = useState<MediaData[]>([]);
     const [loading, setLoading] = useState(false);
@@ -37,7 +42,7 @@ const ForYouPage: React.FC = () => {
             setLoading(true);
             try {
                 const prompt = `
-                  Generate a list of 10 educational articles, resources, or videos, based my following needs: wnats to start learning organic chemistry. Have like a fun description!
+                  Create a list of 10 educational articles, resources, or videos, based on someone wanting to start learning the quadratic formula. Have a fun description!
                   Provide the list in the following JSON format:
                   {
                     "links": [
@@ -47,13 +52,13 @@ const ForYouPage: React.FC = () => {
                 `;
                 const response = await axios.post('http://localhost:5000/api/upload', { prompt });
                 const rawLinksData = response.data.description;
-                console.log(rawLinksData)
+                console.log(rawLinksData);
                 const jsonString = rawLinksData.replace(/```json\n|\n```/g, '').trim();
                 const linksData = JSON.parse(jsonString);
 
                 setMediaData(linksData.links);
 
-                // PLEASE STOP RATE LIMITING US ITS ONLY 10 REQUESTS
+                // Uncomment if using LinkPreview API
                 /*
                 const previews = await Promise.all(
                     linksData.links.map(async (link: { type: string; url: string }) => {
@@ -89,7 +94,7 @@ const ForYouPage: React.FC = () => {
                 <h1 className="text-2xl font-semibold mb-6 text-center">For You</h1>
 
                 {loading ? (
-                    <p className="text-center">Generating content, please wait...</p>
+                    <p className="text-center">Compiling your feed, please wait...</p>
                 ) : (
                     <div className="flex flex-col items-center space-y-4 overflow-y-auto" style={{ maxHeight: '80vh' }}>
                         {mediaData.map((media, index) => (
@@ -102,6 +107,20 @@ const ForYouPage: React.FC = () => {
                                         </a>
                                         <p className="text-gray-600 text-sm">{media.url}</p>
                                         <p className="mt-2 text-gray-700 break-words overflow-hidden text-ellipsis">{media.description}</p>
+                                        {media.type === 'video' && extractYouTubeId(media.url) && (
+                                            <div className="mt-4">
+                                                <iframe
+                                                    width="100%"
+                                                    height="315"
+                                                    src={`https://www.youtube.com/embed/${extractYouTubeId(media.url)}`}
+                                                    title={media.title}
+                                                    frameBorder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowFullScreen
+                                                    className="rounded-lg"
+                                                ></iframe>
+                                            </div>
+                                        )}
                                     </div>
                                     <a href={media.url} target="_blank" rel="noopener noreferrer" className="ml-4 flex-shrink-0">
                                         <img src={LinkIcon} alt="Link" className="w-8 h-8" />
