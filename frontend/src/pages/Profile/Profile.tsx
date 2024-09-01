@@ -66,6 +66,18 @@ const Profile: React.FC = () => {
         }
     };
 
+    const handleDeleteItem = async (index: number, type: string) => {
+        if (type === 'interest') {
+            const updatedInterests = academicInterests.filter((_, i) => i !== index);
+            setAcademicInterests(updatedInterests);
+            await updateUserProfile(updatedInterests, goalsProjects);
+        } else if (type === 'project') {
+            const updatedGoals = goalsProjects.filter((_, i) => i !== index);
+            setGoalsProjects(updatedGoals);
+            await updateUserProfile(academicInterests, updatedGoals);
+        }
+    };
+
     const updateUserProfile = async (interests: string[], goals: string[]) => {
         const username = Cookies.get('username');
 
@@ -104,10 +116,16 @@ const Profile: React.FC = () => {
                         </div>
                     </div>
                     <p className="text-gray-500 mb-4">Add some interests for our algorithm to better personalize your feed.</p>
-                    <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexGrow: 1 }}> {/* Stacked items vertically with scroll */}
+                    <div className="flex flex-col gap-2 overflow-y-auto pr-4" style={{ flexGrow: 1 }}> {/* Stacked items vertically with scroll */}
                         {academicInterests.map((interest, index) => (
-                            <div key={index} className="px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 inline-block w-min">
-                                {interest}
+                            <div key={index} className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded-lg border border-gray-300">
+                                <span className="inline-block">{interest}</span>
+                                <img
+                                    src={CloseIcon}
+                                    alt="Delete"
+                                    className="w-4 h-4 cursor-pointer"
+                                    onClick={() => handleDeleteItem(index, 'interest')}
+                                />
                             </div>
                         ))}
                     </div>
@@ -126,10 +144,16 @@ const Profile: React.FC = () => {
                     <p className="text-gray-500 mb-4">
                         Set your goals and ongoing projects here. This will help our algorithm understand your aspirations and see what you’re working on, making it easier to support your journey.
                     </p>
-                    <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexGrow: 1 }}> {/* Stacked items vertically with scroll */}
+                    <div className="flex flex-col gap-2 overflow-y-auto pr-4" style={{ flexGrow: 1 }}> {/* Stacked items vertically with scroll */}
                         {goalsProjects.map((project, index) => (
-                            <div key={index} className="px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 inline-block w-min">
-                                {project}
+                            <div key={index} className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded-lg border border-gray-300">
+                                <span className="inline-block">{project}</span>
+                                <img
+                                    src={CloseIcon}
+                                    alt="Delete"
+                                    className="w-4 h-4 cursor-pointer"
+                                    onClick={() => handleDeleteItem(index, 'project')}
+                                />
                             </div>
                         ))}
                     </div>
@@ -172,4 +196,4 @@ const Profile: React.FC = () => {
     );
 };
 
-export default Profile;
+export default Profile; 
