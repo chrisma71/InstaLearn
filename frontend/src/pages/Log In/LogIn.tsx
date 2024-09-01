@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
             if (response.status === 200) {
                 alert("Login successful!");
                 Cookies.set('username', response.data.user.username, { expires: 30 });
-                navigate('/');  
+                navigate('/profile');  // Redirect to /profile after successful login
             }
         } catch (error) {
             console.error("There was an error logging in the user:", error);
@@ -49,7 +49,6 @@ const LoginPage: React.FC = () => {
                 className="border border-[#B1B1B1] p-8 rounded-xl bg-white bg-opacity-90"
                 style={{
                     backgroundColor: '#FFFFFF',
-                    boxShadow: 'inset 0px 2px 3.8px rgba(0, 0, 0, 0.5)',
                 }}
             >
                 <h1 className="text-center text-2xl text-black font-semibold mb-8">Sign In</h1>
