@@ -36,16 +36,6 @@ const Landing: React.FC = () => {
         <div className="absolute right-40 top-1/2 transform -translate-y-1/2 flex items-center justify-end overflow-hidden">
           <img src={Squiggle} alt="Decorative Squiggle" className="h-20 max-w-none" style={{ width: '50%', marginTop: '10%' }} />
         </div>
-
-        {/* Two Randomly Positioned White Boxes with Icons and Text */}
-        <div className="absolute right-96 top-1/3 mt-12 transform -translate-y-1/2 w-48 h-16 bg-white shadow-md rounded-lg border border-1 border-[#F1A400] flex items-center justify-center">
-          <img src={Members} alt="Members Icon" className="h-6 mr-2" />
-          <span className="text-gray-700 font-medium">3 members</span>
-        </div>
-        <div className="absolute right-[34rem] top-1/4 transform -translate-y-1/2 w-48 h-16 bg-white shadow-md rounded-lg border border-1 border-[#F1A400] flex items-center justify-center">
-          <img src={Chat} alt="Chat Icon" className="h-6 mr-2" />
-          <span className="text-gray-700 font-medium">∞ posts</span>
-        </div>
       </div>
     </section>
   );
